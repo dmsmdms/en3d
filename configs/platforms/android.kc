@@ -1,0 +1,39 @@
+menu "APK key info"
+	config APK_KEY_PASSWORD
+		string "APK key password"
+		default qqaawwss
+
+	config APK_KEY_CN
+		string "Your first and last name"
+		default Unknown
+
+	config APK_KEY_OU
+		string "Your organizational unit"
+		default Unknown	
+
+	config APK_KEY_OU
+		string "Your organizational unit"
+		default Unknown
+
+	config APK_KEY_O
+		string "Your organizational"
+		default Unknown
+
+	config APK_KEY_L
+		string "Your City or Locality"
+		default Unknown
+
+	config APK_KEY_ST
+		string "Your State or Province"
+		default Unknown
+
+	config APK_KEY_C
+		string "Your country code"
+		default Unknown
+endmenu
+
+menu "Target arch"
+	config ANDROID_ARCH_ARM64
+		bool "ARM64"
+		default y
+endmenu

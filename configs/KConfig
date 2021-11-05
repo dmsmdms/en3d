@@ -1,0 +1,39 @@
+mainmenu "Project Config"
+
+config PLATFORM_CONFIGS_DIR
+	option env="PLATFORM_CONFIGS_DIR"
+	string
+
+config PROJECT_NAME
+	string "Project name"
+	default en3d
+
+choice
+	prompt "Target platform"
+	default PLATFORM_LINUX
+
+	config PLATFORM_LINUX
+		bool "Linux"
+	config PLATFORM_WINDOWS
+		bool "Windows"
+	config PLATFORM_ANDROID
+		bool "Android"
+	config PLATFORM_WEB
+		bool "Web"
+endchoice
+
+if PLATFORM_LINUX
+	source "$PLATFORM_CONFIGS_DIR/linux.kc"
+endif
+
+if PLATFORM_WINDOWS
+	source "$PLATFORM_CONFIGS_DIR/windows.kc"
+endif
+
+if PLATFORM_ANDROID
+	source "$PLATFORM_CONFIGS_DIR/android.kc"
+endif
+
+if PLATFORM_WEB
+	source "$PLATFORM_CONFIGS_DIR/web.kc"
+endif

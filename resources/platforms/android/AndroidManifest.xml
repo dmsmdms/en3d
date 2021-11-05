@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.@PROJECT_NAME@" android:versionCode="1" android:versionName="1.0">
+<uses-sdk android:minSdkVersion="24" android:targetSdkVersion="30"/>
+	<application android:label="@PROJECT_NAME@">
+		<activity android:name="com.@PROJECT_NAME@.MainActivity" android:label="@PROJECT_NAME@">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+	</application>
+</manifest>
