@@ -1,0 +1,9 @@
+menu "Window System Interface"
+	config LINUX_WSI_XCB
+		bool "XCB (X.Org)"
+		default y
+
+	config LINUX_WSI_WAYLAND
+		bool "Wayland"
+		default n
+endmenu

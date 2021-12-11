@@ -1,13 +1,9 @@
 #include <core/assert.h>
+#include <tmp/config.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
-
-#ifndef WEB_FSTREAM_BUF_SIZE
-#warning WEB_FSTREAM_BUF_SIZE is undefined
-#define WEB_FSTREAM_BUF_SIZE 1024
-#endif
 
 FILE * restrict stdout = NULL;
 FILE * restrict stderr = NULL;

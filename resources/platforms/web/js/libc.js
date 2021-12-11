@@ -1,9 +1,17 @@
+const SIGSEGV = 0;
+const VK_SUCCESS = 0;
+const VK_ERROR_INCOMPATIBLE_DRIVER = -9;
+
 const decoder = new TextDecoder('utf-8');
 const encoder = new TextEncoder();
+let vkObjects = new Array();
 let exports = null;
 let memory = null;
 
-const SIGSEGV = 0;
+function setInt32(ptr, value) {
+	const buf = new Int32Array(memory, ptr, 1);
+	buf.set(value);
+}
 
 function getStr(data, length) {
 	data = new Uint8Array(memory, data, length);
@@ -40,6 +48,37 @@ function makeArgs(module, arg_list) {
 	return args;
 }
 
+const vkAPI = {
+	vkCreateInstance: function(create_info, alloc_cb, instance_ptr) {
+		const instance = navigator.gpu;
+
+		if(instance === undefined) {
+			return VK_ERROR_INCOMPATIBLE_DRIVER;
+		}
+
+		setInt32(instance_ptr, vkObjects.length);
+		vkObjects.push(instance);
+
+		return VK_SUCCESS;
+	},
+	vkDestroyInstance: function(instance) {
+		vkObjects.splice(instance, 1);
+	},
+	vkEnumeratePhysicalDevices: async function(instance, dev_count_ptr, dev_ptr) {
+		if(dev_ptr != 0) {
+			const adapter = await vkObjects[instance].requestAdapter();
+			console.log(adapter); //TODO
+		} else {
+			setInt32(dev_count_ptr, 1);
+		}
+
+		return VK_SUCCESS;
+	},
+	vkGetPhysicalDeviceProperties: function() {
+
+	},
+};
+
 const imports = {
 	write: function (fd, data, length) {
 		switch (fd) {
@@ -56,7 +95,7 @@ const imports = {
 };
 
 export async function startModule(module, args) {
-	const { instance } = await WebAssembly.instantiateStreaming(fetch(module), { env: imports });
+	const { instance } = await WebAssembly.instantiateStreaming(fetch(module), { env: Object.assign(imports, vkAPI) });
 
 	exports = instance.exports;
 	memory = exports.memory.buffer;

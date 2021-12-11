@@ -54,8 +54,8 @@ void * malloc(unsigned long size) {
 	return ptr + 1;
 }
 
-void free(void * const restrict ptr) __attribute__((optnone)) {
-	(void)ptr; //TODO
+void free(void * const restrict ptr UNUSED) OPTNONE {
+	//TODO
 }
 
 char * strchr(const char * restrict str, const int chr) {

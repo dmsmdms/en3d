@@ -2,6 +2,7 @@ VPATH := $(VPATH) $(PLATFORM_SOURCES_DIR)/android
 BUILD_DIR := $(BASE_BUILD_DIR)/android
 TARGET := $(BUILD_DIR)/$(PROJECT_NAME).apk
 TMP_DIR := $(BUILD_DIR)/tmp
+CONFIG_FILE := $(TMP_DIR)/config.h
 
 include $(PLATFORM_MAKEFILES_DIR)/android_apk.mk
 
@@ -16,8 +17,8 @@ ANDROID_AAPT := $(ANDROID_BUILD_TOOLS)/aapt
 ANDROID_JAR := $(ANDROID_SDK)/android.jar
 ANDROID_DX := $(ANDROID_BUILD_TOOLS)/dx
 
-CFLAGS := $(CFLAGS) -Wno-attributes -std=c11 -I $(PLATFORM_INCLUDE_DIR)/android -I $(ANDROID_INCLUDE)
-LDFLAGS := $(LDFLAGS) --lto -llog
+CFLAGS := $(CFLAGS) -Wno-attributes -std=c11 -I $(PLATFORM_INCLUDE_DIR)/android -I $(ANDROID_INCLUDE) -I $(BUILD_DIR)
+LDFLAGS := $(LDFLAGS) --lto -llog -lvulkan
 
 ANDROID_OBJ_FLAGS := --redefine-sym startModule=Java_com_$(PROJECT_NAME)_MainActivity_startModule
 SOURCES := $(call get_sources, $(VPATH))
@@ -30,6 +31,9 @@ $(TARGET): $(APK_UNSIGNED_PATH) $(APK_KEY_PATH)
 	$(call apksigner, $(ANDROID_APK_FLAGS) --out $@ --in $<)
 $(APK_UNSIGNED_PATH): $(ANDROID_TMP_RESOURCES)/AndroidManifest.xml $(ANDROID_TARGET) $(APK_DEX_NAME)
 	$(call aapt, package -fM $< -F $@ -I $(ANDROID_JAR) $(APK_DIR))
+$(CONFIG_FILE):
+	@ $(call mkdir, $(@D))
+	@ $(call common_config)
 $(PLATFORM_INSTALL):
 	@ $(call install, javac, install_javac)
 	@ $(call install, keytool, install_keytool)

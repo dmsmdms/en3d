@@ -16,7 +16,7 @@ WASM_LD := wasm-ld
 
 kconfig-mconf = $(KCONFIG_FRONTENDS_DIR)/kconfig-mconf.exe $(1)
 wasm-ld = $(LLVM_DIR)/bin/wasm-ld.exe $(1)
-minify =  $(MINIFY_DIR)/minify.exe $(1)
+minify = $(MINIFY_DIR)/minify.exe $(1)
 clang = $(LLVM_DIR)/bin/clang.exe $(1)
 keytool = $(JDK_DIR)/keytool.exe $(1)
 javac = $(JDK_DIR)/javac.exe $(1)

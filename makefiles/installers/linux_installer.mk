@@ -6,6 +6,7 @@ installer_template = $(error Try to install $(strip $(1)) manually)
 uninstaller_template = $(error Try to install $(strip $(1)) manually)
 endif
 
+install_khronos_validation = $(call installer_template, vulkan-validationlayers)
 install_keytool = $(call installer_template, openjdk-$(JAVA_VERSION)-jre-headless)
 install_javac = $(call installer_template, openjdk-$(JAVA_VERSION)-jdk-headless)
 install_kconfig_frontends = $(call installer_template, kconfig-frontends)
@@ -15,6 +16,7 @@ install_clang = $(call installer_template, clang)
 install_llvm = $(call installer_template, llvm)
 install_gcc = $(call installer_template, gcc)
 
+uninstall_khronos_validation = $(call uninstaller_template, vulkan-validationlayers)
 uninstall_keytool = $(call uninstaller_template, openjdk-$(JAVA_VERSION)-jre-headless)
 uninstall_javac = $(call uninstaller_template, openjdk-$(JAVA_VERSION)-jdk-headless)
 uninstall_kconfig_frontends = $(call uninstaller_template, kconfig-frontends)

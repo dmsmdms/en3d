@@ -17,10 +17,10 @@ ARM64_OBJECTS := $(ARM64_OBJECTS) $(call get_objects, $(ARM64_TMP_DIR), $(SOURCE
 $(ARM64_TARGET): $(ARM64_OBJECTS)
 	@ $(call mkdir, $(@D))
 	$(call aarch64-linux-android-gcc, $(ARM64_OBJECTS) -o $@ $(ARM64_LDFLAGS))
-$(ARM64_TMP_DIR)/%.o: %.c
+$(ARM64_TMP_DIR)/%.o: %.c $(CONFIG_FILE)
 	@ $(call mkdir, $(@D))
 	$(call aarch64-linux-android-gcc, $(ARM64_CFLAGS) -flto $< -o $@)
-$(ARM64_TMP_DIR)/libc.o: libc.c
+$(ARM64_TMP_DIR)/libc.o: libc.c $(CONFIG_FILE)
 	@ $(call mkdir, $(@D))
 	$(call aarch64-linux-android-gcc, $(ARM64_CFLAGS) $< -o $@)
 	$(call aarch64-linux-android-objcopy, $@ $(ANDROID_OBJ_FLAGS))

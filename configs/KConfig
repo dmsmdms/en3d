@@ -4,9 +4,61 @@ config PLATFORM_CONFIGS_DIR
 	option env="PLATFORM_CONFIGS_DIR"
 	string
 
-config PROJECT_NAME
-	string "Project name"
-	default en3d
+menu "Project info"
+	config PROJECT_NAME
+		string "Project name"
+		default en3d
+
+	config PROJECT_VERSION_MAJOR
+		int "Major version"
+		default 0
+
+	config PROJECT_VERSION_MINOR
+		int "Minor version"
+		default 0
+
+	config PROJECT_VERSION_PATCH
+		int "Patch version"
+		default 1
+endmenu
+
+menu "Engine info"
+	config ENGINE_NAME
+		string "Engine name"
+		default NoEngine
+
+	config ENGINE_VERSION_MAJOR
+		int "Major version"
+		default 0
+
+	config ENGINE_VERSION_MINOR
+		int "Minor version"
+		default 0
+
+	config ENGINE_VERSION_PATCH
+		int "Patch version"
+		default 1
+endmenu
+
+menu "Debug"
+	if PLATFORM_LINUX || PLATFORM_WINDOWS
+		choice
+			prompt "Vulkan validation layer"
+			default ENABLE_KHRONOS_VALIDATION
+
+			config ENABLE_LUNARG_STANDART_VALIDATION
+				bool "LunarG Standard Validation Layer"
+			config ENABLE_KHRONOS_VALIDATION
+				bool "Khronos Validation Layer"
+			config DISABLE_VALIDATION
+				bool "Disable validation"
+		endchoice
+
+		config ENABLE_DEBUG_UTILS
+			bool "Vulkan debug utils"
+			default y
+	endif
+endmenu
 
 choice
 	prompt "Target platform"

@@ -65,6 +65,7 @@ uninstall: $(PLATFORM_UNINSTALL)
 	@ $(if $(PROJECT_NAME), $(call rmdir, $(INSTALL_DIR)))
 menuconfig:
 	@ $(call kconfig-mconf, $(CONFIGS_DIR)/KConfig)
+	@ $(call del, $(CONFIG_FILE))
 distclean:
 	$(call rmdir, $(BASE_BUILD_DIR))
 	$(call del, .config.old)
